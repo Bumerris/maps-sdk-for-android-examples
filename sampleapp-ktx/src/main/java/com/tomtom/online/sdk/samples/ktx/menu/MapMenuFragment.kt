@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -89,6 +89,11 @@ class MapMenuFragment : MenuFragment() {
                         description = R.string.menu_map_centering_description,
                         banner = R.drawable.ic_map_menu_map_centering,
                         onClickNavigateTo = R.id.mapCenteringFragment),
+                MenuItem(title = R.string.menu_map_initialization_title,
+                        icon = R.drawable.ic_map_menu_icon,
+                        description = R.string.menu_map_initialization_description,
+                        banner = R.drawable.ic_map_menu_map_initialization,
+                        onClickNavigateTo = R.id.mapInitializationFragment),
                 MenuItem(title = R.string.menu_map_perspective_title,
                         icon = R.drawable.ic_map_menu_icon,
                         description = R.string.menu_map_perspective_description,

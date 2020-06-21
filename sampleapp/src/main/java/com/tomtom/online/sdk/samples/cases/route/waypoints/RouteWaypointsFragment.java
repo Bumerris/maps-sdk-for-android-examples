@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -24,7 +24,6 @@ public class RouteWaypointsFragment extends RoutePlannerFragment<RouteWaypointsP
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
         view.addOption(R.string.btn_text_initial_order);
-        view.addOption(R.string.btn_text_best_order);
         view.addOption(R.string.btn_text_clear);
     }
 
@@ -33,8 +32,6 @@ public class RouteWaypointsFragment extends RoutePlannerFragment<RouteWaypointsP
         if (newValues[0]) {
             presenter.initialOrder();
         } else if (newValues[1]) {
-            presenter.bestOrder();
-        } else if (newValues[2]) {
             presenter.noWaypoints();
         }
     }

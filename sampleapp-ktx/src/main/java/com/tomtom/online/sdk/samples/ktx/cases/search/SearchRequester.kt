@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -18,6 +18,8 @@ import com.tomtom.online.sdk.samples.ktx.utils.arch.ResourceLiveData
 import com.tomtom.online.sdk.search.OnlineSearchApi
 import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchQuery
 import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchResult
+import com.tomtom.online.sdk.search.data.autocomplete.AutocompleteSearchQuery
+import com.tomtom.online.sdk.search.data.autocomplete.AutocompleteSearchResponse
 import com.tomtom.online.sdk.search.data.batch.BatchSearchQuery
 import com.tomtom.online.sdk.search.data.batch.BatchSearchResponse
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery
@@ -25,6 +27,8 @@ import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchQuery
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchResult
+import com.tomtom.online.sdk.search.data.poicategories.PoiCategoriesQuery
+import com.tomtom.online.sdk.search.data.poicategories.PoiCategoriesResponse
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderFullAddress
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQuery
 import com.tomtom.online.sdk.search.extensions.SearchService
@@ -47,7 +51,7 @@ class SearchRequester(context: Context) : RxContext {
             .observeOn(resultScheduler)
             .subscribe(
                 { response -> results.value = Resource.success(response.results) },
-                { error -> results.value = Resource.error(null, Error(error.message)) }
+                { error -> results.value = Resource.error(Error(error.message)) }
             )
         )
     }
@@ -62,7 +66,7 @@ class SearchRequester(context: Context) : RxContext {
                 .observeOn(resultScheduler)
                 .subscribe(
                     { response -> results.value = Resource.success(response.addresses) },
-                    { error -> results.value = Resource.error(null, Error(error.message)) }
+                    { error -> results.value = Resource.error(Error(error.message)) }
                 ))
     }
 
@@ -76,7 +80,7 @@ class SearchRequester(context: Context) : RxContext {
                 .observeOn(resultScheduler)
                 .subscribe(
                     { response -> results.value = Resource.success(response.results) },
-                    { error -> results.value = Resource.error(null, Error(error.message)) }
+                    { error -> results.value = Resource.error(Error(error.message)) }
                 ))
     }
 
@@ -90,7 +94,7 @@ class SearchRequester(context: Context) : RxContext {
                 .observeOn(resultScheduler)
                 .subscribe(
                     { response -> results.value = Resource.success(response.results) },
-                    { error -> results.value = Resource.error(null, Error(error.message)) }
+                    { error -> results.value = Resource.error(Error(error.message)) }
                 ))
     }
 
@@ -104,7 +108,37 @@ class SearchRequester(context: Context) : RxContext {
                 .observeOn(resultScheduler)
                 .subscribe(
                     { response -> results.value = Resource.success(response) },
-                    { error -> results.value = Resource.error(null, Error(error.message)) }
+                    { error -> results.value = Resource.error(Error(error.message)) }
+                )
+        )
+    }
+
+    fun poiCategoriesSearch(poiCategoriesQuery: PoiCategoriesQuery, results: ResourceLiveData<PoiCategoriesResponse>) {
+        results.value = Resource.loading(null)
+        disposable.set(
+            //tag::doc_poi_categories_search_request[]
+            searchApi.poiCategoriesSearch(poiCategoriesQuery)
+                //end::doc_poi_categories_search_request[]
+                .subscribeOn(workingScheduler)
+                .observeOn(resultScheduler)
+                .subscribe(
+                    { response -> results.value = Resource.success(response) },
+                    { error -> results.value = Resource.error(Error(error.message)) }
+                )
+        )
+    }
+
+    fun autocompleteSearch(autocompleteQuery: AutocompleteSearchQuery, results: ResourceLiveData<AutocompleteSearchResponse>) {
+        results.value = Resource.loading(null)
+        disposable.set(
+            //tag::doc_autocomplete_search_request[]
+            searchApi.autocompleteSearch(autocompleteQuery)
+                //end::doc_autocomplete_search_request[]
+                .subscribeOn(workingScheduler)
+                .observeOn(resultScheduler)
+                .subscribe(
+                    { response -> results.value = Resource.success(response) },
+                    { error -> results.value = Resource.error(Error(error.message)) }
                 )
         )
     }

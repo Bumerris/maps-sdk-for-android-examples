@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -27,28 +27,22 @@ class RouteWaypointsViewModel(application: Application) : RouteViewModel(applica
         planRouteWithWaypoints()
     }
 
-    fun plantBestOrderRoute() {
-        assignWaypoints()
-        planRouteWithWaypoints(computeBestOrder = true)
-    }
-
     fun planNoWaypointsRoute() {
         assignEmptyArray()
         planRouteWithWaypoints()
     }
 
-    private fun planRouteWithWaypoints(computeBestOrder: Boolean = false) {
-        val routeQuery = prepareRouteQuery(computeBestOrder, waypoints)
+    private fun planRouteWithWaypoints() {
+        val routeQuery = prepareRouteQuery(waypoints)
         planRoute(routeQuery)
     }
 
-    private fun prepareRouteQuery(computeBestOrder: Boolean, waypoints: Array<LatLng>): RouteQuery {
+    private fun prepareRouteQuery(waypoints: Array<LatLng>): RouteQuery {
         val origin = AmsterdamToBerlinRouteConfig().origin
         val destination = AmsterdamToBerlinRouteConfig().destination
         //tag::doc_route_waypoints[]
         val routeQuery = RouteQueryBuilder.create(origin, destination)
                 .withWayPoints(waypoints)
-                .withComputeBestOrder(computeBestOrder)
                 .withConsiderTraffic(false)
                 .build()
         //end::doc_route_waypoints[]

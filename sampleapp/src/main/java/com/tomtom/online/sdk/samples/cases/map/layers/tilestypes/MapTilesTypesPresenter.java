@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -55,6 +55,20 @@ public class MapTilesTypesPresenter extends BaseFunctionalExamplePresenter {
         //tag::doc_set_none_tiles[]
         tomtomMap.getUiSettings().setMapTilesType(MapTilesType.NONE);
         //end::doc_set_none_tiles[]
+    }
+
+    @SuppressWarnings("unused")
+    private void loadRasterStyle() {
+        //tag::doc_load_raster_tiles[]
+        tomtomMap.getUiSettings().setStyleUrl("asset://styles/mapssdk-raster_style.json");
+        //end::doc_load_raster_tiles[]
+    }
+
+    @SuppressWarnings("unused")
+    private void loadVectorStyle() {
+        //tag::doc_load_vector_tiles[]
+        tomtomMap.getUiSettings().loadDefaultStyle();
+        //end::doc_load_vector_tiles[]
     }
 
     public void centerOnAmsterdam() {

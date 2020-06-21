@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -14,6 +14,7 @@ import android.graphics.Color;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.Chevron;
+import com.tomtom.online.sdk.map.ChevronPosition;
 import com.tomtom.online.sdk.map.CircleBuilder;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.driving.MatchResult;
@@ -36,9 +37,10 @@ public class ChevronMatcherUpdater implements MatcherListener {
     //tag::doc_process_matcher_result[]
     @Override
     public void onMatched(MatchResult matchResult) {
+        ChevronPosition chevronPosition = new ChevronPosition.Builder(matchResult.getMatchedLocation()).build();
 
         chevron.setDimmed(!matchResult.isMatched());
-        chevron.setLocation(matchResult.getMatchedLocation());
+        chevron.setPosition(chevronPosition);
         chevron.show();
 
         tomtomMap.getOverlaySettings().removeOverlays();

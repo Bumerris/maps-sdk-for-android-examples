@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -55,7 +55,7 @@ class CustomMapStyleFragment : ExampleFragment() {
         mainViewModel.applyOnMap(MapAction {
             let { tomtomMap ->
                 //tag::set_default_style[]
-                tomtomMap.uiSettings.setStyleUrl("asset://styles/mapssdk-default-style.json")
+                tomtomMap.uiSettings.loadDefaultStyle()
                 tomtomMap.logoSettings.applyDefaultLogo()
                 //end::set_default_style[]
             }

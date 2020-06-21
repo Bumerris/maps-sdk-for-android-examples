@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -137,8 +137,9 @@ abstract class DrivingFragment<T : DrivingViewModel> : ExampleFragment() {
 
     private fun processMatchedResult(it: ChevronMatchedStateUpdate) {
         //tag::doc_process_matcher_result[]
+        val chevronPosition = ChevronPosition.Builder(it.matchedLocation).build()
         chevron.isDimmed = it.isDimmed
-        chevron.setLocation(it.matchedLocation)
+        chevron.position = chevronPosition
         chevron.show()
         showOriginalLocationDot(it)
         //end::doc_process_matcher_result[]

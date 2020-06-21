@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -15,7 +15,6 @@ import android.app.Application
 import android.os.Environment
 import android.util.Log
 import com.tomtom.online.sdk.common.util.LogUtils
-import com.tomtom.online.sdk.samples.CrashSupporter
 import com.tomtom.sdk.examples.BuildConfig
 import java.io.File
 
@@ -24,7 +23,6 @@ class SampleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CrashSupporter.create(this)
         initLogs()
     }
 
@@ -35,8 +33,7 @@ class SampleApp : Application() {
     }
 
     companion object {
-        private const val LOGCAT_FILE_NAME = "logcat.txt"
-        val LOGCAT_PATH = Environment.getExternalStorageDirectory().toString() + File.separator + LOGCAT_FILE_NAME
+        val LOG_FILE_PATH = Environment.getExternalStorageDirectory().toString() + File.separator
     }
 
 }

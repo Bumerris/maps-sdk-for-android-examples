@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -55,13 +55,13 @@ class AlongRouteFragment : SearchFragment<AlongRouteViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.routingResult.observe(this, ResourceObserver(
+        viewModel.routingResult.observe(viewLifecycleOwner, ResourceObserver(
             hideLoading = ::hideLoading,
             showLoading = ::showLoading,
             onSuccess = ::displayRoute,
             onError = ::showError))
 
-        viewModel.results.observe(this, ResourceObserver(
+        viewModel.results.observe(viewLifecycleOwner, ResourceObserver(
             hideLoading = ::hideLoading,
             showLoading = ::showLoading,
             onSuccess = ::displayResults,

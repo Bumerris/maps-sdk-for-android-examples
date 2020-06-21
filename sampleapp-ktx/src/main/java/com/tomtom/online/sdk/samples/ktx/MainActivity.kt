@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -11,6 +11,7 @@
 
 package com.tomtom.online.sdk.samples.ktx
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -18,10 +19,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.tomtom.online.sdk.common.location.BoundingBox
+import com.tomtom.online.sdk.common.location.LatLng
 import com.tomtom.online.sdk.common.permission.AppPermissionHandler
-import com.tomtom.online.sdk.map.MapFragment
-import com.tomtom.online.sdk.map.OnMapReadyCallback
-import com.tomtom.online.sdk.map.TomtomMap
+import com.tomtom.online.sdk.map.*
 import com.tomtom.online.sdk.samples.ktx.extensions.visibleIf
 import com.tomtom.sdk.examples.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,8 +50,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMap() {
-        //tag::doc_initialise_map[]
+        //tag::doc_obtain_fragment_reference[]
         mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment
+        //end::doc_obtain_fragment_reference[]
+        //tag::doc_initialise_map[]
         mapFragment.getAsyncMap(onMapReadyCallback)
         //end::doc_initialise_map[]
     }
@@ -66,9 +69,21 @@ class MainActivity : AppCompatActivity() {
         viewModel.aboutButtonVisibility().observe(this, Observer {
             about_btn.visibleIf(it)
         })
+        viewModel.mapFragmentVisibility().observe(this, Observer {
+            setMapFragmentVisibility(it)
+        })
         viewModel.mapAction().observe(this, Observer { action ->
             mapFragment.getAsyncMap { tomtomMap -> action.invoke(tomtomMap) }
         })
+    }
+
+    private fun setMapFragmentVisibility(visible: Boolean) {
+        val transaction = supportFragmentManager.beginTransaction()
+        when(visible) {
+            true -> transaction.show(mapFragment)
+            false -> transaction.hide(mapFragment)
+        }
+        transaction.commit()
     }
 
     private fun initAboutFragment() {
@@ -81,8 +96,11 @@ class MainActivity : AppCompatActivity() {
         val mapPaddingHorizontal = resources.getDimension(R.dimen.map_padding_horizontal).toDouble()
 
         tomtomMap.uiSettings.currentLocationView.hide()
-        tomtomMap.setPadding(mapPaddingVertical, mapPaddingHorizontal,
-            mapPaddingVertical, mapPaddingHorizontal)
+        tomtomMap.setPadding(
+            mapPaddingVertical, mapPaddingHorizontal,
+            mapPaddingVertical, mapPaddingHorizontal
+        )
+        tomtomMap.collectLogsToFile(SampleApp.LOG_FILE_PATH)
     }
     //end::doc_implement_on_map_ready_callback[]
 
@@ -90,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     private val onMapReadyCallbackSaveLogs = object : OnMapReadyCallback {
         //tag::doc_collect_logs_to_file_in_onready_callback[]
         override fun onMapReady(tomtomMap: TomtomMap) {
-            tomtomMap.collectLogsToFile(SampleApp.LOGCAT_PATH)
+            tomtomMap.collectLogsToFile(SampleApp.LOG_FILE_PATH)
         }
         //end::doc_collect_logs_to_file_in_onready_callback[]
     }

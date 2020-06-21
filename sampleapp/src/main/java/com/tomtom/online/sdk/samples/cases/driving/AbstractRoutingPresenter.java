@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.common.service.ServiceException;
+import com.tomtom.online.sdk.map.ChevronPosition;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.RouteBuilder;
 import com.tomtom.online.sdk.routing.OnlineRoutingApi;
@@ -98,7 +99,8 @@ public abstract class AbstractRoutingPresenter extends AbstractTrackingPresenter
     };
 
     protected void onRouteReady(FullRoute fullRoute) {
-        getChevron().setLocation(getRouteOrigin(fullRoute).toLocation());
+        ChevronPosition chevronPosition = new ChevronPosition.Builder(getRouteOrigin(fullRoute).toLocation()).build();
+        getChevron().setPosition(chevronPosition);
         showRoute(fullRoute);
         restoreSimulator();
     }

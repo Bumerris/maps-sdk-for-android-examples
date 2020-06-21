@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
 
 
@@ -59,6 +59,7 @@ dependencies {
         implementation("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk")
         implementation("com.tomtom.online:sdk-maps-driving-extensions:$rootProject.internalVersions.sdk")
         implementation("com.tomtom.online:sdk-geofencing:$rootProject.internalVersions.sdk")
+
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

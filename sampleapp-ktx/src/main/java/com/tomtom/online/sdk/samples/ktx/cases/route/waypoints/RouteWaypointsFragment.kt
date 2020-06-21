@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2020 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -57,7 +57,6 @@ class RouteWaypointsFragment : RouteFragment<RouteWaypointsViewModel>() {
 
     private fun confViewActions() {
         route_waypoints_initial_order_btn.setOnClickListener { viewModel.planInitialOrderRoute() }
-        route_waypoints_best_order_btn.setOnClickListener { viewModel.plantBestOrderRoute() }
         route_waypoints_no_waypoints_btn.setOnClickListener { viewModel.planNoWaypointsRoute() }
     }
 
